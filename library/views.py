@@ -8,33 +8,45 @@ from .serializers import BookSerializer, BorrowerSerializer, LoanSerializer
 
 
 class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Book.objects.filter(added_by=self.request.user)
+        user = getattr(self.request, "user", None)
+        if user and user.is_authenticated:
+            return Book.objects.filter(added_by=user)
+        return Book.objects.none()
 
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
 
 
 class BorrowerViewSet(viewsets.ModelViewSet):
+    queryset = Borrower.objects.all()
     serializer_class = BorrowerSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Borrower.objects.filter(added_by=self.request.user)
+        user = getattr(self.request, "user", None)
+        if user and user.is_authenticated:
+            return Borrower.objects.filter(added_by=user)
+        return Borrower.objects.none()
 
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
 
 
 class LoanViewSet(viewsets.ModelViewSet):
+    queryset = Loan.objects.all()
     serializer_class = LoanSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Loan.objects.filter(added_by=self.request.user)
+        user = getattr(self.request, "user", None)
+        if user and user.is_authenticated:
+            return Loan.objects.filter(added_by=user)
+        return Loan.objects.none()
 
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)

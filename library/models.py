@@ -22,7 +22,7 @@ class Book(models.Model):
         return f"Livro: {self.title}, {self.author}"
 
     @property
-    def is_available(self):
+    def is_available(self) -> bool:
         return not self.loans.filter(return_date__isnull=True).exists()
 
 
