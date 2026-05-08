@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import LibraryManager
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class LibraryManagerSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True, required=True, style={"input_type": "password"}
     )
@@ -19,3 +19,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data["password"],
         )
         return user
+
+
+class RegisterSerializer(LibraryManagerSerializer):
+    class Meta(LibraryManagerSerializer.Meta):
+        pass
