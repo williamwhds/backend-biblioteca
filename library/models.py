@@ -50,6 +50,12 @@ class Loan(models.Model):
     due_date = models.DateField()
     return_date = models.DateField(blank=True, null=True)
 
+    added_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="added_loans",
+    )
+
     def clean(self):
         active_loans = Loan.objects.filter(book=self.book, return_date__isnull=True)
         if not self.pk and active_loans.exists():
