@@ -1,0 +1,12 @@
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+
+from library.views import BookViewSet, LoanViewSet
+
+router = DefaultRouter()
+router.register(r"books", BookViewSet, basename="book")
+router.register(r"loans", LoanViewSet, basename="loan")
+
+urlpatterns = [
+    path("api/", include(router.urls)),
+]
