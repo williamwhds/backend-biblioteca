@@ -17,6 +17,7 @@ class BorrowerSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
     added_by_detail = LibraryManagerSerializer(source="added_by", read_only=True)
+    cover_image_url = serializers.ImageField(required=False, allow_null=True)
 
     class Meta:
         model = Book

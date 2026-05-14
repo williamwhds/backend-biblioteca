@@ -10,7 +10,7 @@ class Book(models.Model):
     published_year = models.IntegerField()
     genre = models.CharField(max_length=255)
     isbn = models.CharField(max_length=13, unique=True)
-    cover_image_url = models.URLField(blank=True, null=True)
+    cover_image_url = models.ImageField(upload_to="book_covers/", blank=True, null=True)
 
     added_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

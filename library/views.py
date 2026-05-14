@@ -1,6 +1,7 @@
 from django.utils import timezone
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.response import Response
 
 from .models import Book, Borrower, Loan
@@ -11,6 +12,8 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_queryset(self):
         user = getattr(self.request, "user", None)
